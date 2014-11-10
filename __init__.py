@@ -38,8 +38,9 @@ class Vector(object):
         x=magnitude*math.cos(direction)
         y=magnitude*math.sin(direction)
         return Vector(x, y)
-
-def main(_groups, config, *args, vitalsprite=None):
+#if all of these die the game ends
+vital=util.Group()
+def main(_groups, config, *args):
     #_groups should be a dictionary mapping group names to groups
     #config should be a dictionary:
     #   "res":screen resolution in the format (width, height), defaults to (640, 480)
@@ -68,9 +69,7 @@ def main(_groups, config, *args, vitalsprite=None):
     #events:list of events that happened this time step
     #groups:dictionary of groups that exist
     updated=util.Group()
-    #if all of these die the game ends
-    vital=util.Group()
-    if vitalsprite!=None:vital.add(vitalsprite)
+
     #add your group to this dictionary to have it be seen by all sprites
     groups={"rendered":rendered, "updated":updated, "vital":vital}
     groups.update(_groups)
