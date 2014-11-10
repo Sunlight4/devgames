@@ -51,8 +51,6 @@ class PhysicsObject(Sprite):
             netyforce=sum([f.y for f in self.forces])
             netforce=Vector(netxforce, netyforce)
             self.v=self.v+netforce
-            
-        
         self.rect.x+=self.v.x
         self.rect.y+=self.v.y
         self.forces=[]

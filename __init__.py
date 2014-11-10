@@ -39,7 +39,7 @@ class Vector(object):
         y=magnitude*math.sin(direction)
         return Vector(x, y)
 
-def main(_groups, config, *args):
+def main(_groups, config, *args, vitalsprite=None):
     #_groups should be a dictionary mapping group names to groups
     #config should be a dictionary:
     #   "res":screen resolution in the format (width, height), defaults to (640, 480)
@@ -68,9 +68,11 @@ def main(_groups, config, *args):
     #events:list of events that happened this time step
     #groups:dictionary of groups that exist
     updated=util.Group()
-
+    #if all of these die the game ends
+    vital=util.Group()
+    if vitalsprite!=None:vital.add(vitalsprite)
     #add your group to this dictionary to have it be seen by all sprites
-    groups={"rendered":rendered, "updated":updated}
+    groups={"rendered":rendered, "updated":updated, "vital":vital}
     groups.update(_groups)
     for sprite in args:
         rendered.add(sprite)
@@ -82,6 +84,8 @@ def main(_groups, config, *args):
             #quickly check if we got a QUIT event
             if event.type==pygame.QUIT:
                 return
+        if len(vital.sprites())<1:
+            return
         #OK, send the events to the "updated" group...
         #(update before rendering so image changes can be seen quicker)
         updated.update({"events":events, "groups":groups})
