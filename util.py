@@ -123,6 +123,23 @@ class SquareBlock(PhysicsObject):
        self.rect = self.image.get_rect()
        self.rect.x=x
        self.rect.y=y
+class ImageBlock(PhysicsObject):
+    #Taken from http://www.pygame.org/docs/ref/sprite.html
+    #A solid color block. What more needs to be said?
+    # Constructor. Pass in the color of the block,
+    # and its x and y position
+    def __init__(self, path, x, y):
+       # Call the parent class (Sprite) constructor
+       super(ImageBlock, self).__init__()
+
+       # Create an image of the block, and fill it with a color.
+       self.image = pygame.image.load(path)
+
+       # Fetch the rectangle object that has the dimensions of the image
+       # Update the position of this object by setting the values of rect.x and rect.y
+       self.rect = self.image.get_rect()
+       self.rect.x=x
+       self.rect.y=y
 class BlockShortcut(object):
     def __init__(self, cls, **kw):
         self.__class__ = type(self.__class__.__name__, (self.__class__,), {})
