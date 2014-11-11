@@ -40,7 +40,7 @@ class Vector(object):
         return Vector(x, y)
 #if all of these die the game ends
 vital=[]
-def newvital(name, msg):
+def newvital(msg):
     global vital
     vital.append([util.Group(), msg])
 def main(_groups, config, *args):
