@@ -1,5 +1,5 @@
 from __future__ import division
-import pygame, sys
+import pygame, sys, functools
 from vector import Vector
 class Group(pygame.sprite.Group):pass
 class Sprite(pygame.sprite.Sprite):
@@ -37,12 +37,10 @@ class Sprite(pygame.sprite.Sprite):
         
 #inherit from this class for physics(recommended)
 class PhysicsObject(Sprite):
-    def __init__(self, maxSpeed, maxForce, *args, **kw):
+    def __init__(self, *args, **kw):
         super(PhysicsObject, self).__init__(*args, **kw)
         self.v=Vector(0,0)
         self.forces=[]
-        self.maxSpeed=maxSpeed
-        self.maxForce=maxForce
         if self.maxForce<=0:self.maxForce=2
     def update(self, dictionary):
         super(PhysicsObject, self).update(dictionary)
@@ -113,9 +111,9 @@ class SquareBlock(PhysicsObject):
     #A solid color block. What more needs to be said?
     # Constructor. Pass in the color of the block,
     # and its x and y position
-    def __init__(self, color, side, x, y, maxSpeed=2, maxForce=2):
+    def __init__(self, color, side, x, y):
        # Call the parent class (Sprite) constructor
-       super(SquareBlock, self).__init__(maxSpeed, maxForce)
+       super(SquareBlock, self).__init__()
 
        # Create an image of the block, and fill it with a color.
        self.image = pygame.Surface([side, side])
@@ -126,6 +124,10 @@ class SquareBlock(PhysicsObject):
        self.rect = self.image.get_rect()
        self.rect.x=x
        self.rect.y=y
+class BlockShortcut(object):
+    def __init__(self, cls, **kw):
+        self.cls=cls
+        self.__call__=functools.partial(cls.__init__, **kw)
 
 
 

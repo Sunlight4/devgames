@@ -55,6 +55,8 @@ def main(_groups, config, *args):
     try:keyinterval=config["keyinterval"]
     except KeyError:keyinterval=5
     pygame.key.set_repeat(keydelay, keyinterval)
+    if len(vital.sprites())<1:vitalneeded=False
+    else:vitalneeded=True
     mixer=pygame.mixer
     mixer.init()
     music=mixer.music
@@ -83,7 +85,7 @@ def main(_groups, config, *args):
             #quickly check if we got a QUIT event
             if event.type==pygame.QUIT:
                 return
-        if len(vital.sprites())<1:
+        if vitalneeded and len(vital.sprites())<1:
             return
         #OK, send the events to the "updated" group...
         #(update before rendering so image changes can be seen quicker)
