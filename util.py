@@ -41,7 +41,6 @@ class PhysicsObject(Sprite):
         super(PhysicsObject, self).__init__(*args, **kw)
         self.v=Vector(0,0)
         self.forces=[]
-        if self.maxForce<=0:self.maxForce=2
     def update(self, dictionary):
         super(PhysicsObject, self).update(dictionary)
         if self.forces:
