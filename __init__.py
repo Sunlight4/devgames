@@ -40,9 +40,9 @@ class Vector(object):
         return Vector(x, y)
 #if all of these die the game ends
 vital=[]
-def newvitals(n):
+def newvital(name, msg):
     global vital
-    for i in range(n):vital.append(util.Group())
+    vital.append([util.Group(), msg])
 def main(_groups, config, *args):
     #_groups should be a dictionary mapping group names to groups
     #config should be a dictionary:
@@ -89,8 +89,9 @@ def main(_groups, config, *args):
             if event.type==pygame.QUIT:
                 return
         if vitalneeded:
-            for vitalg in vital:
+            for vitalg, msg in vital:
                 if len(vitalg.sprites())<1:
+                    print msg
                     return
         #OK, send the events to the "updated" group...
         #(update before rendering so image changes can be seen quicker)
