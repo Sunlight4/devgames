@@ -125,8 +125,8 @@ class SquareBlock(PhysicsObject):
        self.rect.y=y
 class BlockShortcut(object):
     def __init__(self, cls, **kw):
-        self.cls=cls
-        self.__call__=functools.partial(cls.__init__, **kw)
+        self.__class__ = type(self.__class__.__name__, (self.__class__,), {})
+        self.__class__.__call__ = functools.partial(cls, **kw)
 
 
 
