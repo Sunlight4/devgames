@@ -39,7 +39,10 @@ class Vector(object):
         y=magnitude*math.sin(direction)
         return Vector(x, y)
 #if all of these die the game ends
-vital=util.Group()
+vital=[]
+def newvitals(n):
+    global vital
+    for i in range(n):vital.append(util.Group())
 def main(_groups, config, *args):
     #_groups should be a dictionary mapping group names to groups
     #config should be a dictionary:
@@ -55,7 +58,7 @@ def main(_groups, config, *args):
     try:keyinterval=config["keyinterval"]
     except KeyError:keyinterval=5
     pygame.key.set_repeat(keydelay, keyinterval)
-    if len(vital.sprites())<1:vitalneeded=False
+    if len(vital)<1:vitalneeded=False
     else:vitalneeded=True
     mixer=pygame.mixer
     mixer.init()
@@ -85,8 +88,10 @@ def main(_groups, config, *args):
             #quickly check if we got a QUIT event
             if event.type==pygame.QUIT:
                 return
-        if vitalneeded and len(vital.sprites())<1:
-            return
+        if vitalneeded:
+            for vitalg in vital:
+                if len(vitalg.sprites())<1:
+                    return
         #OK, send the events to the "updated" group...
         #(update before rendering so image changes can be seen quicker)
         updated.update({"events":events, "groups":groups})
